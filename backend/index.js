@@ -1,10 +1,13 @@
 const express = require('express')
 const app = express()
 const port = 5002
-const mongoose = require ("mongoose")
-const mongodb = require("./db.js")
-mongodb();
+const { AbortController: AbortControllerPolyfill } = require('abort-controller');
+global.AbortController = AbortControllerPolyfill;
 
+const mongoose = require ("mongoose")
+const {connectToDatabase } = require("./db.js");
+
+connectToDatabase()
 
 app.get('/', (req, res) => {
   res.send('Hello World!')

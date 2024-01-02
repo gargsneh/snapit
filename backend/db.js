@@ -1,11 +1,21 @@
 const mongoose = require('mongoose');
-const mongoURI = 'mongodb+srv://gargsneh40:F4MNiaR5CchZLHVe@database1.zasmyy7.mongodb.net/?retryWrites=true&w=majority'
-
-const mongodb =() => {
-    mongoose.connect(mongoURI , ()=> {
-        console.log("connected");
-    });
-
+async function connectToDatabase() {
+    try {
+      await mongoose.connect('mongodb+srv://gargsneh40:F4MNiaR5CchZLHVe@database1.zasmyy7.mongodb.net/fooditems?retryWrites=true&w=majority');
+      console.log('Connected to database successfully');
+      const collection =  mongoose.connection.db.collection("delivery");
+      const data = await collection.find({}).toArray(function(err,data){
+        console.log(data);
+      });
+        
+            
+        
+        
+      }
+     catch (err) {
+      console.error('Error connecting to database:', err);
+    }
 }
-
-    module.exports = mongodb;
+  
+  module.exports = {connectToDatabase};
+  
